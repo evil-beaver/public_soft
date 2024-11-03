@@ -1,0 +1,328 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.18">
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+		<ChildItems>
+			<Button name="ФормаЗапуститьЗагрузку" id="1">
+				<Type>CommandBarButton</Type>
+				<CommandName>Form.Command.ЗапуститьЗагрузку</CommandName>
+				<ExtendedTooltip name="ФормаЗапуститьЗагрузкуРасширеннаяПодсказка" id="2"/>
+			</Button>
+			<Button name="ФормаПолучитьСписокДоступныхСчетовПользователя" id="37">
+				<Type>CommandBarButton</Type>
+				<CommandName>Form.Command.ПолучитьСписокДоступныхСчетовПользователя</CommandName>
+				<ExtendedTooltip name="ФормаПолучитьСписокДоступныхСчетовПользователяРасширеннаяПодсказка" id="38"/>
+			</Button>
+		</ChildItems>
+	</AutoCommandBar>
+	<Events>
+		<Event name="BeforeClose">ПередЗакрытием</Event>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
+	</Events>
+	<ChildItems>
+		<Pages name="Страницы" id="42">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Страницы</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Страницы</v8:content>
+				</v8:item>
+			</ToolTip>
+			<PagesRepresentation>TabsOnTop</PagesRepresentation>
+			<ExtendedTooltip name="СтраницыРасширеннаяПодсказка" id="43"/>
+			<ChildItems>
+				<Page name="НастройкиСчетов" id="44">
+					<Title>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Настройки счетов</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Настройки счетов</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="НастройкиСчетовРасширеннаяПодсказка" id="45"/>
+					<ChildItems>
+						<Table name="СоответствиеСчетовБанка" id="3">
+							<AutoInsertNewRow>true</AutoInsertNewRow>
+							<EnableStartDrag>true</EnableStartDrag>
+							<EnableDrag>true</EnableDrag>
+							<DataPath>Объект.СоответствиеСчетовБанка</DataPath>
+							<SearchStringLocation>None</SearchStringLocation>
+							<ViewStatusLocation>None</ViewStatusLocation>
+							<SearchControlLocation>None</SearchControlLocation>
+							<RowFilter xsi:nil="true"/>
+							<ContextMenu name="СоответствиеСчетовБанкаКонтекстноеМеню" id="4"/>
+							<AutoCommandBar name="СоответствиеСчетовБанкаКоманднаяПанель" id="5"/>
+							<ExtendedTooltip name="СоответствиеСчетовБанкаРасширеннаяПодсказка" id="6"/>
+							<SearchStringAddition name="СоответствиеСчетовБанкаСтрокаПоиска" id="7">
+								<AdditionSource>
+									<Item>СоответствиеСчетовБанка</Item>
+									<Type>SearchStringRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="СоответствиеСчетовБанкаСтрокаПоискаКонтекстноеМеню" id="8"/>
+								<ExtendedTooltip name="СоответствиеСчетовБанкаСтрокаПоискаРасширеннаяПодсказка" id="9"/>
+							</SearchStringAddition>
+							<ViewStatusAddition name="СоответствиеСчетовБанкаСостояниеПросмотра" id="10">
+								<AdditionSource>
+									<Item>СоответствиеСчетовБанка</Item>
+									<Type>ViewStatusRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="СоответствиеСчетовБанкаСостояниеПросмотраКонтекстноеМеню" id="11"/>
+								<ExtendedTooltip name="СоответствиеСчетовБанкаСостояниеПросмотраРасширеннаяПодсказка" id="12"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="СоответствиеСчетовБанкаУправлениеПоиском" id="13">
+								<AdditionSource>
+									<Item>СоответствиеСчетовБанка</Item>
+									<Type>SearchControl</Type>
+								</AdditionSource>
+								<ContextMenu name="СоответствиеСчетовБанкаУправлениеПоискомКонтекстноеМеню" id="14"/>
+								<ExtendedTooltip name="СоответствиеСчетовБанкаУправлениеПоискомРасширеннаяПодсказка" id="15"/>
+							</SearchControlAddition>
+							<ChildItems>
+								<LabelField name="СоответствиеСчетовБанкаНомерСтроки" id="16">
+									<DataPath>Объект.СоответствиеСчетовБанка.LineNumber</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="СоответствиеСчетовБанкаНомерСтрокиКонтекстноеМеню" id="17"/>
+									<ExtendedTooltip name="СоответствиеСчетовБанкаНомерСтрокиРасширеннаяПодсказка" id="18"/>
+								</LabelField>
+								<InputField name="СоответствиеСчетовБанкаОрганизация" id="28">
+									<DataPath>Объект.СоответствиеСчетовБанка.Организация</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="СоответствиеСчетовБанкаОрганизацияКонтекстноеМеню" id="29"/>
+									<ExtendedTooltip name="СоответствиеСчетовБанкаОрганизацияРасширеннаяПодсказка" id="30"/>
+								</InputField>
+								<InputField name="СоответствиеСчетовБанкаПредставлениеСчетаКарты" id="34">
+									<DataPath>Объект.СоответствиеСчетовБанка.ПредставлениеСчетаКарты</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="СоответствиеСчетовБанкаПредставлениеСчетаКартыКонтекстноеМеню" id="35"/>
+									<ExtendedTooltip name="СоответствиеСчетовБанкаПредставлениеСчетаКартыРасширеннаяПодсказка" id="36"/>
+								</InputField>
+								<InputField name="СоответствиеСчетовБанкаВалюта" id="58">
+									<DataPath>Объект.СоответствиеСчетовБанка.Валюта</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ExtendedEditMultipleValues>true</ExtendedEditMultipleValues>
+									<ContextMenu name="СоответствиеСчетовБанкаВалютаКонтекстноеМеню" id="59"/>
+									<ExtendedTooltip name="СоответствиеСчетовБанкаВалютаРасширеннаяПодсказка" id="60"/>
+								</InputField>
+								<InputField name="СоответствиеСчетовБанкаДатаНачалаОбмена" id="31">
+									<DataPath>Объект.СоответствиеСчетовБанка.ДатаНачалаОбмена</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="СоответствиеСчетовБанкаДатаНачалаОбменаКонтекстноеМеню" id="32"/>
+									<ExtendedTooltip name="СоответствиеСчетовБанкаДатаНачалаОбменаРасширеннаяПодсказка" id="33"/>
+								</InputField>
+								<InputField name="СоответствиеСчетовБанкаБанковскийСчет" id="19">
+									<DataPath>Объект.СоответствиеСчетовБанка.БанковскийСчетКасса</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="СоответствиеСчетовБанкаБанковскийСчетКонтекстноеМеню" id="20"/>
+									<ExtendedTooltip name="СоответствиеСчетовБанкаБанковскийСчетРасширеннаяПодсказка" id="21"/>
+								</InputField>
+								<InputField name="СоответствиеСчетовБанкаИдентификатор" id="22">
+									<DataPath>Объект.СоответствиеСчетовБанка.Идентификатор</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="СоответствиеСчетовБанкаИдентификаторКонтекстноеМеню" id="23"/>
+									<ExtendedTooltip name="СоответствиеСчетовБанкаИдентификаторРасширеннаяПодсказка" id="24"/>
+								</InputField>
+								<InputField name="СоответствиеСчетовБанкаАпиКлюч" id="25">
+									<DataPath>Объект.СоответствиеСчетовБанка.АпиКлюч</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="СоответствиеСчетовБанкаАпиКлючКонтекстноеМеню" id="26"/>
+									<ExtendedTooltip name="СоответствиеСчетовБанкаАпиКлючРасширеннаяПодсказка" id="27"/>
+								</InputField>
+							</ChildItems>
+						</Table>
+					</ChildItems>
+				</Page>
+				<Page name="НастройкиПоУмолчанию" id="46">
+					<Title>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Настройки по умолчанию</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Настройки по умолчанию</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="НастройкиПоУмолчаниюРасширеннаяПодсказка" id="47"/>
+					<ChildItems>
+						<UsualGroup name="Свойство" id="48">
+							<Title>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Свойство</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Свойство</v8:content>
+								</v8:item>
+							</ToolTip>
+							<Group>AlwaysHorizontal</Group>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="СвойствоРасширеннаяПодсказка" id="49"/>
+							<ChildItems>
+								<InputField name="СвойствоИдентификаторПлатежа" id="39">
+									<DataPath>Объект.СвойствоИдентификаторПлатежа</DataPath>
+									<ExtendedEditMultipleValues>true</ExtendedEditMultipleValues>
+									<ContextMenu name="СвойствоИдентификаторПлатежаКонтекстноеМеню" id="40"/>
+									<ExtendedTooltip name="СвойствоИдентификаторПлатежаРасширеннаяПодсказка" id="41"/>
+								</InputField>
+								<Button name="СоздатьСвойствоИдентификаторТранзакции" id="50">
+									<Type>UsualButton</Type>
+									<Representation>Picture</Representation>
+									<CommandName>Form.Command.СоздатьСвойствоИдентификаторТранзакции</CommandName>
+									<Picture>
+										<xr:Ref>StdPicture.CreateListItem</xr:Ref>
+										<xr:LoadTransparent>true</xr:LoadTransparent>
+									</Picture>
+									<ExtendedTooltip name="СоздатьСвойствоИдентификаторТранзакцииРасширеннаяПодсказка" id="51"/>
+								</Button>
+							</ChildItems>
+						</UsualGroup>
+						<UsualGroup name="ГруппаПокупець" id="61">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Данные покупателя</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Дані покупця</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Группа покупець</v8:content>
+								</v8:item>
+							</ToolTip>
+							<Group>Vertical</Group>
+							<Representation>None</Representation>
+							<ExtendedTooltip name="ГруппаПокупецьРасширеннаяПодсказка" id="62"/>
+							<ChildItems>
+								<InputField name="СтатьяДвиженияДенежныхСредствПокупатель" id="52">
+									<DataPath>Объект.СтатьяДвиженияДенежныхСредствПокупатель</DataPath>
+									<ExtendedEditMultipleValues>true</ExtendedEditMultipleValues>
+									<ContextMenu name="СтатьяДвиженияДенежныхСредствПокупательКонтекстноеМеню" id="53"/>
+									<ExtendedTooltip name="СтатьяДвиженияДенежныхСредствПокупательРасширеннаяПодсказка" id="54"/>
+								</InputField>
+								<InputField name="КонтрагентПокупательПоУмолчанию" id="65">
+									<DataPath>Объект.КонтрагентПокупательПоУмолчанию</DataPath>
+									<ExtendedEditMultipleValues>true</ExtendedEditMultipleValues>
+									<ContextMenu name="КонтрагентПокупательПоУмолчаниюКонтекстноеМеню" id="66"/>
+									<ExtendedTooltip name="КонтрагентПокупательПоУмолчаниюРасширеннаяПодсказка" id="67"/>
+								</InputField>
+							</ChildItems>
+						</UsualGroup>
+						<UsualGroup name="ГруппаПоставщик" id="63">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Данные поставщика</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Дані постачальника</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Группа поставщик</v8:content>
+								</v8:item>
+							</ToolTip>
+							<Group>Vertical</Group>
+							<Representation>None</Representation>
+							<ExtendedTooltip name="ГруппаПоставщикРасширеннаяПодсказка" id="64"/>
+							<ChildItems>
+								<InputField name="СтатьяДвиженияДенежныхСредствПоставщик" id="55">
+									<DataPath>Объект.СтатьяДвиженияДенежныхСредствПоставщик</DataPath>
+									<ExtendedEditMultipleValues>true</ExtendedEditMultipleValues>
+									<ContextMenu name="СтатьяДвиженияДенежныхСредствПоставщикКонтекстноеМеню" id="56"/>
+									<ExtendedTooltip name="СтатьяДвиженияДенежныхСредствПоставщикРасширеннаяПодсказка" id="57"/>
+								</InputField>
+								<InputField name="КонтрагентПоставщикПоУмолчанию" id="68">
+									<DataPath>Объект.КонтрагентПоставщикПоУмолчанию</DataPath>
+									<ExtendedEditMultipleValues>true</ExtendedEditMultipleValues>
+									<ContextMenu name="КонтрагентПоставщикПоУмолчаниюКонтекстноеМеню" id="69"/>
+									<ExtendedTooltip name="КонтрагентПоставщикПоУмолчаниюРасширеннаяПодсказка" id="70"/>
+								</InputField>
+							</ChildItems>
+						</UsualGroup>
+					</ChildItems>
+				</Page>
+			</ChildItems>
+		</Pages>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Объект" id="1">
+			<Type>
+				<v8:Type>cfg:ExternalDataProcessorObject.ЗагрузкаПлатежейИзМонобанка</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="ЗапуститьЗагрузку" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Запустить загрузку</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Запустить загрузку</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Запустить загрузку</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ЗапуститьЗагрузку</Action>
+		</Command>
+		<Command name="ПолучитьСписокДоступныхСчетовПользователя" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Получить список доступных счетов пользователя</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Получить список доступных счетов пользователя</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ПолучитьСписокДоступныхСчетовПользователя</Action>
+		</Command>
+		<Command name="СоздатьСвойствоИдентификаторТранзакции" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Создать свойство идентификатор транзакции</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Создать свойство идентификатор транзакции</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>СоздатьСвойствоИдентификаторТранзакции</Action>
+		</Command>
+	</Commands>
+</Form>

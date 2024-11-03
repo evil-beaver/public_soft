@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.18">
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1"/>
+	<Events>
+		<Event name="BeforeClose">ПередЗакрытием</Event>
+		<Event name="OnClose">ПриЗакрытии</Event>
+	</Events>
+	<ChildItems>
+		<LabelDecoration name="ДекорацияВведитеТокен" id="4">
+			<HorizontalStretch>true</HorizontalStretch>
+			<TextColor>style:SpecialTextColor</TextColor>
+			<Font bold="true" kind="AutoFont"/>
+			<Title formatted="false">
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Вкажіть токен від потрібного акаунту монобанку.
+Для отримання токену перейдіть за посиланням:</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Укажите токен от нужного аккаунта монобанка.
+Для получения токена перейдите по ссылке :</v8:content>
+				</v8:item>
+			</Title>
+			<HorizontalAlign>Center</HorizontalAlign>
+			<ContextMenu name="ДекорацияВведитеТокенКонтекстноеМеню" id="5"/>
+			<ExtendedTooltip name="ДекорацияВведитеТокенРасширеннаяПодсказка" id="6"/>
+		</LabelDecoration>
+		<LabelDecoration name="ДекорацияСсылки" id="7">
+			<HorizontalStretch>true</HorizontalStretch>
+			<Title formatted="true">
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>&lt;link https://api.monobank.ua/&gt;https://api.monobank.ua/&lt;/&gt;</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>&lt;link https://api.monobank.ua/&gt;https://api.monobank.ua/&lt;/&gt;</v8:content>
+				</v8:item>
+			</Title>
+			<HorizontalAlign>Center</HorizontalAlign>
+			<ContextMenu name="ДекорацияСсылкиКонтекстноеМеню" id="8"/>
+			<ExtendedTooltip name="ДекорацияСсылкиРасширеннаяПодсказка" id="9"/>
+		</LabelDecoration>
+		<UsualGroup name="Группа1" id="12">
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="Группа1РасширеннаяПодсказка" id="13"/>
+			<ChildItems>
+				<InputField name="Токен" id="1">
+					<DataPath>Токен</DataPath>
+					<ContextMenu name="ТокенКонтекстноеМеню" id="2"/>
+					<ExtendedTooltip name="ТокенРасширеннаяПодсказка" id="3"/>
+				</InputField>
+				<Button name="ВыполнитьПолучениеДанныхСчетов" id="10">
+					<Type>UsualButton</Type>
+					<CommandName>Form.Command.ВыполнитьПолучениеДанныхСчетов</CommandName>
+					<ExtendedTooltip name="ВыполнитьПолучениеДанныхСчетовРасширеннаяПодсказка" id="11"/>
+				</Button>
+			</ChildItems>
+		</UsualGroup>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Объект" id="1">
+			<Type>
+				<v8:Type>cfg:ExternalDataProcessorObject.ЗагрузкаПлатежейИзМонобанка</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+		</Attribute>
+		<Attribute name="Токен" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Токен</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Токен</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+			<FillCheck>ShowError</FillCheck>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="ВыполнитьПолучениеДанныхСчетов" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Выполнить получение данных счетов</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Отримати інформацію по рахункам</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Выполнить получение данных счетов</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ВыполнитьПолучениеДанныхСчетов</Action>
+		</Command>
+	</Commands>
+</Form>
