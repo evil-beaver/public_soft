@@ -8,11 +8,13 @@
 - **Loading Currencies from EC Central Bank Website** — получение валютных курсов с сайта Европейского центрального банка.
 - **NBP WebAPI Currency Rates** — загрузка курсов валют с веб-API Национального банка Польши.
 
+-** Лицензия.
+Проект распространяется под лицензией MIT.
+
 ## Установка
 
 Склонируйте репозиторий:
 ```bash
 git clone https://github.com/evil-beaver/public_soft.git
+bash```
 
-Лицензия
-Проект распространяется под лицензией MIT.
