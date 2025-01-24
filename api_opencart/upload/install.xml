@@ -1,0 +1,77 @@
+<modification>
+    <name>API Clients Module</name>
+    <version>1.0</version>
+    <author>Your Name</author>
+    <link>https://yourwebsite.com</link>
+    <code>api_clients</code>
+    <file path="admin/controller/common/column_left.php">
+        <operation>
+            <search><![CDATA[if ($this->user->hasPermission('access', 'extension/module')) {]]></search>
+            <add position="after"><![CDATA[
+                if ($this->user->hasPermission('access', 'extension/module/api_clients')) {
+                    $module[] = array(
+                        'name'     => 'API Clients',
+                        'href'     => $this->url->link('extension/module/api_clients', 'user_token=' . $this->session->data['user_token'], true),
+                        'children' => array()
+                    );
+                }
+            ]]></add>
+        </operation>
+    </file>
+    <file path="admin/model/setting/setting.php">
+        <operation>
+            <search><![CDATA[public function deleteSetting($code, $store_id = 0) {]]></search>
+            <add position="before"><![CDATA[
+                public function installModule($code) {
+                    $this->db->query("
+                        CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "api_clients` (
+                            `client_id` INT AUTO_INCREMENT PRIMARY KEY,
+                            `client_name` VARCHAR(255) NOT NULL,
+                            `client_secret` VARCHAR(255) NOT NULL,
+                            `status` TINYINT(1) NOT NULL DEFAULT 1,
+                            `date_added` DATETIME NOT NULL
+                        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+                    ");
+                }
+            ]]></add>
+        </operation>
+    </file>
+
+    <!-- Создаем таблицу для хранения ключевых полей -->
+    <file path="admin/model/setting/setting.php">
+        <operation>
+            <search><![CDATA[public function deleteSetting($code, $store_id = 0) {]]></search>
+            <add position="before"><![CDATA[
+                public function installModule($code) {
+                    // Создаем таблицу для ключевых полей
+                    $this->db->query("
+                        CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "api_order_fields` (
+                            `field_id` INT AUTO_INCREMENT PRIMARY KEY,
+                            `field_name` VARCHAR(128) NOT NULL,
+                            `is_required` TINYINT(1) NOT NULL DEFAULT 0,
+                            `date_added` DATETIME NOT NULL,
+                            `date_modified` DATETIME NOT NULL
+                        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+                    ");
+                }
+            ]]></add>
+        </operation>
+    </file>
+
+    <!-- Добавляем пункт меню в админ панель -->
+    <file path="admin/controller/common/column_left.php">
+        <operation>
+            <search><![CDATA[if ($this->user->hasPermission('access', 'extension/module')) {]]></search>
+            <add position="after"><![CDATA[
+                if ($this->user->hasPermission('access', 'extension/module/api_order_fields')) {
+                    $module[] = array(
+                        'name'     => 'API Order Fields',
+                        'href'     => $this->url->link('extension/module/api_order_fields', 'user_token=' . $this->session->data['user_token'], true),
+                        'children' => array()
+                    );
+                }
+            ]]></add>
+        </operation>
+    </file>
+
+</modification>
