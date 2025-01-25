@@ -28,6 +28,8 @@ paths:
                   total: 100.00
         '401':
           description: Не авторизован
+        '500':
+          description: Внутренняя ошибка сервера
 
   /api/orders/create:
     post:
@@ -97,8 +99,12 @@ paths:
             application/json:
               example:
                 order_id: 1
+        '400':
+          description: Неверные данные
         '401':
           description: Не авторизован
+        '500':
+          description: Внутренняя ошибка сервера
 
   /api/orders/update/{order_id}:
     put:
@@ -166,8 +172,14 @@ paths:
             application/json:
               example:
                 status: "success"
+        '400':
+          description: Неверные данные
         '401':
           description: Не авторизован
+        '404':
+          description: Заказ не найден
+        '500':
+          description: Внутренняя ошибка сервера
 
   /api/orders/delete/{order_id}:
     delete:
@@ -192,6 +204,10 @@ paths:
                 status: "success"
         '401':
           description: Не авторизован
+        '404':
+          description: Заказ не найден
+        '500':
+          description: Внутренняя ошибка сервера
 
 components:
   securitySchemes:

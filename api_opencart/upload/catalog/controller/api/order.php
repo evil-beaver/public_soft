@@ -92,40 +92,25 @@ class ControllerApiOrder extends Controller {
     }
 
     public function createOrder() {
-        // Проверяем авторизацию
-        if (!$this->authenticate()) {
-            $this->response->addHeader('HTTP/1.1 401 Unauthorized');
+        $this->load->language('api/order');
+        $this->load->model('checkout/order');
+    
+        // Проверяем обязательные поля
+        if (!isset($this->request->post['order']['firstname']) || empty($this->request->post['order']['firstname'])) {
+            $this->response->setOutput(json_encode(array('error' => 'Firstname is required')));
             return;
         }
     
-        // Получаем данные из JSON-тела запроса
-        $input = json_decode(file_get_contents('php://input'), true);
-    
-        // Загружаем модель заказов
-        $this->load->model('checkout/order');
-    
-        // Получаем ключевые поля из базы данных
-        $required_fields = $this->model_checkout_order->getRequiredFields();
-    
-        // Проверяем обязательные поля
-        foreach ($required_fields as $field) {
-            if (!isset($input['order'][$field])) {
-                $this->response->setOutput(json_encode(['error' => "Field '{$field}' is required"]));
-                return;
-            }
+        if (!isset($this->request->post['order']['email']) || empty($this->request->post['order']['email'])) {
+            $this->response->setOutput(json_encode(array('error' => 'Email is required')));
+            return;
         }
     
         // Создаем заказ
-        $order_id = $this->model_checkout_order->createOrder($input);
+        $order_id = $this->model_checkout_order->addOrder($this->request->post);
     
-        if (!$order_id) {
-            $this->response->setOutput(json_encode(['error' => 'Failed to create order']));
-            return;
-        }
-    
-        // Возвращаем успешный ответ с ID заказа
-        $this->response->addHeader('Content-Type: application/json');
-        $this->response->setOutput(json_encode(['order_id' => $order_id]));
+        // Возвращаем успешный ответ
+        $this->response->setOutput(json_encode(array('order_id' => $order_id)));
     }
     // Метод для проверки авторизации
     private function authenticate() {
@@ -155,12 +140,12 @@ class ControllerApiOrder extends Controller {
         $this->load->model('checkout/order');
     
         // Проверяем, передан ли order_id
-        if (isset($this->request->get['order_id'])) {
-            $order_id = (int)$this->request->get['order_id'];
-        } else {
+        if (!isset($this->request->get['order_id'])) {
             $this->response->setOutput(json_encode(array('error' => 'Order ID is missing')));
             return;
         }
+    
+        $order_id = (int)$this->request->get['order_id'];
     
         // Проверяем, существует ли заказ
         $order_info = $this->model_checkout_order->getOrder($order_id);
@@ -170,10 +155,12 @@ class ControllerApiOrder extends Controller {
         }
     
         // Удаляем заказ
-        $this->model_checkout_order->deleteOrder($order_id);
-    
-        // Возвращаем успешный ответ
-        $this->response->setOutput(json_encode(array('success' => 'Order deleted')));
+        try {
+            $this->model_checkout_order->deleteOrder($order_id);
+            $this->response->setOutput(json_encode(array('success' => 'Order deleted')));
+        } catch (Exception $e) {
+            $this->response->setOutput(json_encode(array('error' => 'Failed to delete order: ' . $e->getMessage())));
+        }
     }
 
 }

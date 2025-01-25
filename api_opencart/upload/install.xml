@@ -4,6 +4,8 @@
     <author>Your Name</author>
     <link>https://yourwebsite.com</link>
     <code>api_clients</code>
+
+    <!-- Добавляем пункт меню в админке -->
     <file path="admin/controller/common/column_left.php">
         <operation>
             <search><![CDATA[if ($this->user->hasPermission('access', 'extension/module')) {]]></search>
@@ -18,11 +20,14 @@
             ]]></add>
         </operation>
     </file>
+
+    <!-- Создаем таблицы и добавляем начальные данные -->
     <file path="admin/model/setting/setting.php">
         <operation>
             <search><![CDATA[public function deleteSetting($code, $store_id = 0) {]]></search>
             <add position="before"><![CDATA[
                 public function installModule($code) {
+                    // Создаем таблицу для клиентов API
                     $this->db->query("
                         CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "api_clients` (
                             `client_id` INT AUTO_INCREMENT PRIMARY KEY,
@@ -32,18 +37,8 @@
                             `date_added` DATETIME NOT NULL
                         ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
                     ");
-                }
-            ]]></add>
-        </operation>
-    </file>
 
-    <!-- Создаем таблицу для хранения ключевых полей -->
-    <file path="admin/model/setting/setting.php">
-        <operation>
-            <search><![CDATA[public function deleteSetting($code, $store_id = 0) {]]></search>
-            <add position="before"><![CDATA[
-                public function installModule($code) {
-                    // Создаем таблицу для ключевых полей
+                    // Создаем таблицу для ключевых полей заказов
                     $this->db->query("
                         CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "api_order_fields` (
                             `field_id` INT AUTO_INCREMENT PRIMARY KEY,
@@ -53,25 +48,22 @@
                             `date_modified` DATETIME NOT NULL
                         ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
                     ");
+
+                    // Добавляем начальные данные
+                    $this->db->query("
+                        INSERT INTO `" . DB_PREFIX . "api_order_fields` (`field_name`, `is_required`, `date_added`, `date_modified`)
+                        VALUES ('customer_name', 1, NOW(), NOW()),
+                               ('email', 1, NOW(), NOW()),
+                               ('phone', 0, NOW(), NOW());
+                    ");
+                }
+
+                public function uninstallModule($code) {
+                    // Удаляем таблицы при деинсталляции
+                    $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "api_clients`");
+                    $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "api_order_fields`");
                 }
             ]]></add>
         </operation>
     </file>
-
-    <!-- Добавляем пункт меню в админ панель -->
-    <file path="admin/controller/common/column_left.php">
-        <operation>
-            <search><![CDATA[if ($this->user->hasPermission('access', 'extension/module')) {]]></search>
-            <add position="after"><![CDATA[
-                if ($this->user->hasPermission('access', 'extension/module/api_order_fields')) {
-                    $module[] = array(
-                        'name'     => 'API Order Fields',
-                        'href'     => $this->url->link('extension/module/api_order_fields', 'user_token=' . $this->session->data['user_token'], true),
-                        'children' => array()
-                    );
-                }
-            ]]></add>
-        </operation>
-    </file>
-
 </modification>
