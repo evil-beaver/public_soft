@@ -43,7 +43,7 @@ API поддерживает следующие методы для работы
 
 ---
 
-3. Работа с заказами
+## Работа с заказами
 Получить список заказов
 Метод: GET
 
@@ -56,12 +56,13 @@ Client-ID: ваш_client_id
 Client-Secret: ваш_client_secret
 
 Пример запроса:
-
-bash
+---
+```bash
 Copy
 curl -X GET http://your-opencart-site.com/api/orders \
 -H "Client-ID: 123" \
 -H "Client-Secret: your_secret_key"
+```
 Получить заказ по ID
 Метод: GET
 
