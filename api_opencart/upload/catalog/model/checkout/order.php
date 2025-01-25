@@ -132,5 +132,15 @@ class ModelCheckoutOrder extends Model {
         ");
     }
 
+    public function deleteOrder($order_id) {
+        // Удаляем заказ из таблицы `order`
+        $this->db->query("DELETE FROM `" . DB_PREFIX . "order` WHERE order_id = '" . (int)$order_id . "'");
+    
+        // Удаляем связанные данные (например, товары в заказе)
+        $this->db->query("DELETE FROM `" . DB_PREFIX . "order_product` WHERE order_id = '" . (int)$order_id . "'");
+        $this->db->query("DELETE FROM `" . DB_PREFIX . "order_history` WHERE order_id = '" . (int)$order_id . "'");
+        $this->db->query("DELETE FROM `" . DB_PREFIX . "order_total` WHERE order_id = '" . (int)$order_id . "'");
+    }
+
 }
 ?>

@@ -149,5 +149,32 @@ class ControllerApiOrder extends Controller {
 
         return true;
     }
+
+    public function deleteOrder() {
+        $this->load->language('api/order');
+        $this->load->model('checkout/order');
+    
+        // Проверяем, передан ли order_id
+        if (isset($this->request->get['order_id'])) {
+            $order_id = (int)$this->request->get['order_id'];
+        } else {
+            $this->response->setOutput(json_encode(array('error' => 'Order ID is missing')));
+            return;
+        }
+    
+        // Проверяем, существует ли заказ
+        $order_info = $this->model_checkout_order->getOrder($order_id);
+        if (!$order_info) {
+            $this->response->setOutput(json_encode(array('error' => 'Order not found')));
+            return;
+        }
+    
+        // Удаляем заказ
+        $this->model_checkout_order->deleteOrder($order_id);
+    
+        // Возвращаем успешный ответ
+        $this->response->setOutput(json_encode(array('success' => 'Order deleted')));
+    }
+
 }
 ?>
