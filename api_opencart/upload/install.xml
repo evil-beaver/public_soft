@@ -27,35 +27,41 @@
             <search><![CDATA[public function deleteSetting($code, $store_id = 0) {]]></search>
             <add position="before"><![CDATA[
                 public function installModule($code) {
-                    // Создаем таблицу для клиентов API
-                    $this->db->query("
-                        CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "api_clients` (
-                            `client_id` INT AUTO_INCREMENT PRIMARY KEY,
-                            `client_name` VARCHAR(255) NOT NULL,
-                            `client_secret` VARCHAR(255) NOT NULL,
-                            `status` TINYINT(1) NOT NULL DEFAULT 1,
-                            `date_added` DATETIME NOT NULL
-                        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-                    ");
+                    // Проверяем, существует ли таблица api_clients
+                    $query = $this->db->query("SHOW TABLES LIKE '" . DB_PREFIX . "api_clients'");
+                    if (!$query->num_rows) {
+                        $this->db->query("
+                            CREATE TABLE `" . DB_PREFIX . "api_clients` (
+                                `client_id` INT AUTO_INCREMENT PRIMARY KEY,
+                                `client_name` VARCHAR(255) NOT NULL,
+                                `client_secret` VARCHAR(255) NOT NULL,
+                                `status` TINYINT(1) NOT NULL DEFAULT 1,
+                                `date_added` DATETIME NOT NULL
+                            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+                        ");
+                    }
 
-                    // Создаем таблицу для ключевых полей заказов
-                    $this->db->query("
-                        CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "api_order_fields` (
-                            `field_id` INT AUTO_INCREMENT PRIMARY KEY,
-                            `field_name` VARCHAR(128) NOT NULL,
-                            `is_required` TINYINT(1) NOT NULL DEFAULT 0,
-                            `date_added` DATETIME NOT NULL,
-                            `date_modified` DATETIME NOT NULL
-                        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-                    ");
+                    // Проверяем, существует ли таблица api_order_fields
+                    $query = $this->db->query("SHOW TABLES LIKE '" . DB_PREFIX . "api_order_fields'");
+                    if (!$query->num_rows) {
+                        $this->db->query("
+                            CREATE TABLE `" . DB_PREFIX . "api_order_fields` (
+                                `field_id` INT AUTO_INCREMENT PRIMARY KEY,
+                                `field_name` VARCHAR(128) NOT NULL,
+                                `is_required` TINYINT(1) NOT NULL DEFAULT 0,
+                                `date_added` DATETIME NOT NULL,
+                                `date_modified` DATETIME NOT NULL
+                            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+                        ");
 
-                    // Добавляем начальные данные
-                    $this->db->query("
-                        INSERT INTO `" . DB_PREFIX . "api_order_fields` (`field_name`, `is_required`, `date_added`, `date_modified`)
-                        VALUES ('customer_name', 1, NOW(), NOW()),
-                               ('email', 1, NOW(), NOW()),
-                               ('phone', 0, NOW(), NOW());
-                    ");
+                        // Добавляем начальные данные
+                        $this->db->query("
+                            INSERT INTO `" . DB_PREFIX . "api_order_fields` (`field_name`, `is_required`, `date_added`, `date_modified`)
+                            VALUES ('customer_name', 1, NOW(), NOW()),
+                                   ('email', 1, NOW(), NOW()),
+                                   ('phone', 0, NOW(), NOW());
+                        ");
+                    }
                 }
 
                 public function uninstallModule($code) {

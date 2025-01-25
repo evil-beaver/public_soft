@@ -112,29 +112,7 @@ class ControllerApiOrder extends Controller {
         // Возвращаем успешный ответ
         $this->response->setOutput(json_encode(array('order_id' => $order_id)));
     }
-    // Метод для проверки авторизации
-    private function authenticate() {
-        // Получаем заголовки запроса
-        $client_id = $this->request->getHeader('Client-ID');
-        $client_secret = $this->request->getHeader('Client-Secret');
-
-        if (empty($client_id) || empty($client_secret)) {
-            $this->response->setOutput(json_encode(['error' => 'Client-ID and Client-Secret are required']));
-            return false;
-        }
-
-        // Проверяем клиента в базе данных
-        $this->load->model('account/api');
-        $client = $this->model_account_api->getClient($client_id, $client_secret);
-
-        if (!$client) {
-            $this->response->setOutput(json_encode(['error' => 'Unauthorized']));
-            return false;
-        }
-
-        return true;
-    }
-
+   
     public function deleteOrder() {
         $this->load->language('api/order');
         $this->load->model('checkout/order');
@@ -163,5 +141,27 @@ class ControllerApiOrder extends Controller {
         }
     }
 
+     // Метод для проверки авторизации
+     private function authenticate() {
+        // Получаем заголовки запроса
+        $client_id = $this->request->getHeader('Client-ID');
+        $client_secret = $this->request->getHeader('Client-Secret');
+
+        if (empty($client_id) || empty($client_secret)) {
+            $this->response->setOutput(json_encode(['error' => 'Client-ID and Client-Secret are required']));
+            return false;
+        }
+
+        // Проверяем клиента в базе данных
+        $this->load->model('account/api');
+        $client = $this->model_account_api->getClient($client_id, $client_secret);
+
+        if (!$client) {
+            $this->response->setOutput(json_encode(['error' => 'Unauthorized']));
+            return false;
+        }
+
+        return true;
+    }
 }
 ?>

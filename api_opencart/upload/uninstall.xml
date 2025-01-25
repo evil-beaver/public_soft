@@ -1,0 +1,23 @@
+<modification>
+    <name>API Order Module - Uninstall</name>
+    <version>1.0</version>
+    <author>Your Name</author>
+    <link>https://yourwebsite.com</link>
+    <code>api_order_uninstall</code>
+
+    <file path="admin/model/setting/setting.php">
+        <operation>
+            <search><![CDATA[public function deleteSetting($code, $store_id = 0) {]]></search>
+            <add position="before"><![CDATA[
+                public function uninstallModule($code) {
+                    // Удаляем таблицы
+                    $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "api_clients`");
+                    $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "api_order_fields`");
+
+                    // Удаляем настройки модуля
+                    $this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `code` = '" . $this->db->escape($code) . "'");
+                }
+            ]]></add>
+        </operation>
+    </file>
+</modification>
