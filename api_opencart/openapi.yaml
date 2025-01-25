@@ -29,39 +29,6 @@ paths:
         '401':
           description: Не авторизован
 
-  /api/orders/{order_id}:
-    get:
-      summary: Получить заказ по ID
-      tags:
-        - Заказы
-      security:
-        - ApiKeyAuth: []
-      parameters:
-        - name: order_id
-          in: path
-          required: true
-          schema:
-            type: integer
-          example: 1
-      responses:
-        '200':
-          description: Успешный запрос
-          content:
-            application/json:
-              example:
-                order_id: 1
-                firstname: "John"
-                lastname: "Doe"
-                email: "john.doe@example.com"
-                total: 100.00
-                products:
-                  - product_id: 42
-                    name: "Example Product"
-                    quantity: 2
-                    price: 50.00
-        '401':
-          description: Не авторизован
-
   /api/orders/create:
     post:
       summary: Создать заказ
@@ -226,8 +193,9 @@ paths:
         '401':
           description: Не авторизован
 
-securitySchemes:
-  ApiKeyAuth:
-    type: apiKey
-    in: header
-    name: Client-ID
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Client-ID
