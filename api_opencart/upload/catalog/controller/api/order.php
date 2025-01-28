@@ -92,6 +92,13 @@ class ControllerApiOrder extends Controller {
     }
 
     public function createOrder() {
+
+        // Проверяем авторизацию
+        if (!$this->authenticate()) {
+            $this->response->addHeader('HTTP/1.1 401 Unauthorized');
+            return;
+        }
+
         $this->load->language('api/order');
         $this->load->model('checkout/order');
     
@@ -114,6 +121,13 @@ class ControllerApiOrder extends Controller {
     }
    
     public function deleteOrder() {
+
+        // Проверяем авторизацию
+        if (!$this->authenticate()) {
+            $this->response->addHeader('HTTP/1.1 401 Unauthorized');
+            return;
+        }
+
         $this->load->language('api/order');
         $this->load->model('checkout/order');
     

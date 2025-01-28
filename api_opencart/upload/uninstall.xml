@@ -20,4 +20,19 @@
             ]]></add>
         </operation>
     </file>
+       <file path="admin/controller/extension/module/api_clients.php">
+        <operation>
+            <remove />
+        </operation>
+    </file>
+    <file path="admin/controller/extension/module/api_order_fields.php">
+        <operation>
+            <remove />
+        </operation>
+    </file>
+    <file path="catalog/controller/api/order.php">
+        <operation>
+            <remove />
+        </operation>
+    </file>
 </modification>

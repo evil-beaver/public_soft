@@ -15,5 +15,5 @@ $route['api/orders/(:num)'] = 'api/order/get/$1'; // Получить заказ
 $route['api/orders/create'] = 'api/order/create'; // Создать заказ
 $route['api/orders/update/(:num)'] = 'api/order/update/$1'; // Обновить заказ
 $route['api/orders/delete/(:num)'] = 'api/order/delete/$1'; // Удалить заказ
-$this->route['api/orders/delete/{order_id}'] = 'api/order/deleteOrder';
+
 ?>

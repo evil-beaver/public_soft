@@ -24,4 +24,9 @@ $_['button_delete'] = 'Delete';
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify API Clients module!';
 $_['error_client_name'] = 'Client Name must be between 3 and 64 characters!';
+
+$_['text_error_client_exists'] = 'Error: Client already exists!';
+$_['text_success_client_added'] = 'Client successfully added.';
+$_['heading_title'] = 'API Clients Management';
+
 ?>

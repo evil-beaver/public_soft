@@ -72,4 +72,19 @@
             ]]></add>
         </operation>
     </file>
+    <file path="admin/controller/extension/module/api_clients.php">
+        <operation>
+            <add><![CDATA[<?php // Файл api_clients.php добавлен успешно ]]></add>
+        </operation>
+    </file>
+    <file path="admin/controller/extension/module/api_order_fields.php">
+        <operation>
+            <add><![CDATA[<?php // Файл api_order_fields.php добавлен успешно ]]></add>
+        </operation>
+    </file>
+    <file path="catalog/controller/api/order.php">
+        <operation>
+            <add><![CDATA[<?php // Файл order.php добавлен успешно ]]></add>
+        </operation>
+    </file>
 </modification>
