@@ -5,14 +5,20 @@
     <link>https://yourwebsite.com</link>
     <code>api_order_uninstall</code>
 
+    <!-- Удаляем данные модуля -->
     <file path="admin/model/setting/setting.php">
         <operation>
             <search><![CDATA[public function deleteSetting($code, $store_id = 0) {]]></search>
             <add position="before"><![CDATA[
                 public function uninstallModule($code) {
-                    // Удаляем таблицы
-                    $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "api_clients`");
-                    $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "api_order_fields`");
+                    // Удаляем файлы данных
+                    $data_path = DIR_STORAGE . 'api_data/';
+                    if (is_dir($data_path)) {
+                        foreach (glob($data_path . '*') as $file) {
+                            unlink($file); // Удаляем файлы
+                        }
+                        rmdir($data_path); // Удаляем папку
+                    }
 
                     // Удаляем настройки модуля
                     $this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `code` = '" . $this->db->escape($code) . "'");
@@ -20,7 +26,9 @@
             ]]></add>
         </operation>
     </file>
-       <file path="admin/controller/extension/module/api_clients.php">
+
+    <!-- Удаляем файлы модуля -->
+    <file path="admin/controller/extension/module/api_clients.php">
         <operation>
             <remove />
         </operation>

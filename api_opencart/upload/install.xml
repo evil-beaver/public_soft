@@ -21,70 +21,74 @@
         </operation>
     </file>
 
-    <!-- Создаем таблицы и добавляем начальные данные -->
+    <!-- Обновляем логику установки -->
     <file path="admin/model/setting/setting.php">
         <operation>
             <search><![CDATA[public function deleteSetting($code, $store_id = 0) {]]></search>
             <add position="before"><![CDATA[
                 public function installModule($code) {
-                    // Проверяем, существует ли таблица api_clients
-                    $query = $this->db->query("SHOW TABLES LIKE '" . DB_PREFIX . "api_clients'");
-                    if (!$query->num_rows) {
-                        $this->db->query("
-                            CREATE TABLE `" . DB_PREFIX . "api_clients` (
-                                `client_id` INT AUTO_INCREMENT PRIMARY KEY,
-                                `client_name` VARCHAR(255) NOT NULL,
-                                `client_secret` VARCHAR(255) NOT NULL,
-                                `status` TINYINT(1) NOT NULL DEFAULT 1,
-                                `date_added` DATETIME NOT NULL
-                            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-                        ");
+                    // Создаём директорию для хранения данных
+                    $data_path = DIR_STORAGE . 'api_data/';
+                    if (!is_dir($data_path)) {
+                        mkdir($data_path, 0755, true);
                     }
 
-                    // Проверяем, существует ли таблица api_order_fields
-                    $query = $this->db->query("SHOW TABLES LIKE '" . DB_PREFIX . "api_order_fields'");
-                    if (!$query->num_rows) {
-                        $this->db->query("
-                            CREATE TABLE `" . DB_PREFIX . "api_order_fields` (
-                                `field_id` INT AUTO_INCREMENT PRIMARY KEY,
-                                `field_name` VARCHAR(128) NOT NULL,
-                                `is_required` TINYINT(1) NOT NULL DEFAULT 0,
-                                `date_added` DATETIME NOT NULL,
-                                `date_modified` DATETIME NOT NULL
-                            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-                        ");
+                    // Создаём начальные файлы
+                    $clients_file = $data_path . 'clients.json';
+                    if (!file_exists($clients_file)) {
+                        file_put_contents($clients_file, json_encode([], JSON_PRETTY_PRINT));
+                    }
 
-                        // Добавляем начальные данные
-                        $this->db->query("
-                            INSERT INTO `" . DB_PREFIX . "api_order_fields` (`field_name`, `is_required`, `date_added`, `date_modified`)
-                            VALUES ('customer_name', 1, NOW(), NOW()),
-                                   ('email', 1, NOW(), NOW()),
-                                   ('phone', 0, NOW(), NOW());
-                        ");
+                    $order_fields_file = $data_path . 'order_fields.json';
+                    if (!file_exists($order_fields_file)) {
+                        $fields = [
+                            ['field_name' => 'customer_name', 'is_required' => true],
+                            ['field_name' => 'email', 'is_required' => true],
+                            ['field_name' => 'phone', 'is_required' => false],
+                        ];
+                        file_put_contents($order_fields_file, json_encode($fields, JSON_PRETTY_PRINT));
                     }
                 }
 
                 public function uninstallModule($code) {
-                    // Удаляем таблицы при деинсталляции
-                    $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "api_clients`");
-                    $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "api_order_fields`");
+                    // Удаляем директорию и файлы данных
+                    $data_path = DIR_STORAGE . 'api_data/';
+                    if (is_dir($data_path)) {
+                        array_map('unlink', glob($data_path . '*'));
+                        rmdir($data_path);
+                    }
                 }
             ]]></add>
         </operation>
     </file>
+
+    <!-- Обновляем контроллеры -->
     <file path="admin/controller/extension/module/api_clients.php">
         <operation>
-            <add><![CDATA[<?php // Файл api_clients.php добавлен успешно ]]></add>
-        </operation>
-    </file>
-    <file path="admin/controller/extension/module/api_order_fields.php">
-        <operation>
-            <add><![CDATA[<?php // Файл api_order_fields.php добавлен успешно ]]></add>
-        </operation>
-    </file>
-    <file path="catalog/controller/api/order.php">
-        <operation>
-            <add><![CDATA[<?php // Файл order.php добавлен успешно ]]></add>
+            <add><![CDATA[
+<?php
+class ControllerExtensionModuleApiClients extends Controller {
+    private $data_file = DIR_STORAGE . 'api_data/clients.json';
+
+    public function index() {
+        $data['clients'] = json_decode(file_get_contents($this->data_file), true) ?: [];
+        $this->response->setOutput($this->load->view('extension/module/api_clients', $data));
+    }
+
+    public function addClient() {
+        $clients = json_decode(file_get_contents($this->data_file), true) ?: [];
+        $clients[] = [
+            'client_id' => count($clients) + 1,
+            'client_name' => $this->request->post['name'],
+            'client_secret' => md5(uniqid()),
+            'status' => 1,
+            'date_added' => date('Y-m-d H:i:s'),
+        ];
+        file_put_contents($this->data_file, json_encode($clients, JSON_PRETTY_PRINT));
+        $this->response->redirect($this->url->link('extension/module/api_clients', 'user_token=' . $this->session->data['user_token'], true));
+    }
+}
+            ]]></add>
         </operation>
     </file>
 </modification>
